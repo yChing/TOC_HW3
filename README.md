@@ -8,7 +8,7 @@ Student ID :  F74002086
 
 Description : parsing housing data from the website using json 
 
-How to use : python TocHW3.py <url> <dist> <road> <year>
+How to use : python TocHW3.py +url +dist +road +year
 
 Example use : python main.py http://www.datagarage.io/api/5365dee31bc6e9d9463a0057 楊梅市 金山街 101
 
