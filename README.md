@@ -1,6 +1,6 @@
 TOC_HW3
 ===============
-Program : TocHW3.py
+Program : TocHW3.py \n
 Coder :  陳彥清 ( yChing )
 Student ID :  F74002086
 Description : parsing housing data from the website using json 
