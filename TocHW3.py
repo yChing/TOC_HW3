@@ -5,7 +5,7 @@
 # Student ID :  F74002086
 # Description : parsing housing data from the website using json 
 # How to use : python TocHW3.py <url> <dist> <road> <year>
-# Example use : python main.py http://www.datagarage.io/api/5365dee31bc6e9d9463a0057 楊梅市 金山街 101
+# Example use : python TocHW3.py http://www.datagarage.io/api/5365dee31bc6e9d9463a0057 楊梅市 金山街 101
 # Reference : http://www.crifan.com/summary_what_is_json_and_how_to_process_json_string/
 # Reference : http://andylin02.iteye.com/blog/845355
 ################################################
@@ -13,10 +13,19 @@ import urllib # get data from the website | another choose is urllib2
 import sys # command line input | python main.py arg1 arg2 arg3
 import json
 import re  #parsing json
-
-
-def parsing(data, iDists, iRoad, iYear):
 	
+def main():
+
+	#check the command line input 
+	if len(sys.argv) != 5:
+		print 'Error !!  Do --> TOC_HW3.py <url> <dist> <road> <year>'
+		sys.exit(0)
+	else:
+		url, dists, road, year = sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4]
+
+	page = urllib.urlopen(url) #load json from the web
+  	data = json.load(page)  #json to python list(dictionary)
+
 	#chinese needs to be converted to unicode
 	getDists = unicode("鄉鎮市區", "utf-8")
 	getRoad = unicode("土地區段位置或建物區門牌", "utf-8")
@@ -25,13 +34,13 @@ def parsing(data, iDists, iRoad, iYear):
 
 	
 	# inputed chinese should be  converted utf-8 to unicode
-	iDists = unicode(iDists, "utf-8")
-	iRoad = unicode(iRoad, "utf-8")
-	iYear = int(iYear)
+	dists = unicode(dists, "utf-8")
+	road = unicode(road, "utf-8")
+	year = int(year)
 
 	# regular expression 
-	pattern1 = re.compile(iDists)
-	pattern2 = re.compile(iRoad)
+	pattern1 = re.compile(dists)
+	pattern2 = re.compile(road)
 
 	
 	count = 0 #muched result
@@ -44,7 +53,7 @@ def parsing(data, iDists, iRoad, iYear):
 		matchRoad = pattern2.search(data[i][getRoad])
 
 		tYear = str(data[i][getYear])
-		if iYear <= int(tYear[:-2]):
+		if year <= int(tYear[:-2]):
 			matchYear = True
 		else:
 			matchYear = False
@@ -69,19 +78,6 @@ def parsing(data, iDists, iRoad, iYear):
 
 	print AvgMoney
 
-def main():
-
-	#check the command line input 
-	if len(sys.argv) != 5:
-		print 'Error !!  Do --> TOC_HW3.py <url> <dist> <road> <year>'
-		sys.exit(0)
-	else:
-		url, dists, road, year = sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4]
-
-	page = urllib.urlopen(url) #load json from the web
-  	data = json.load(page)  #json to python list(dictionary)
-
-	parsing(data, dists, road, year)
 
 if __name__ == '__main__':
 	main()
